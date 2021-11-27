@@ -55,6 +55,12 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+            if (m_Points > DataPersistence.Instance.highestScore)
+            {
+                DataPersistence.Instance.highestScore = m_Points;
+                DataPersistence.Instance.bestPlayer = DataPersistence.Instance.currentPlayer;
+                DataPersistence.Instance.SaveScore();
+            }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -10,10 +11,29 @@ using UnityEditor;
 [DefaultExecutionOrder(1000)]
 public class MenuUI : MonoBehaviour
 {
-    
+    public string input;
+    public TextMeshProUGUI currentPlayerText;
+    public TextMeshProUGUI highscoreText;
+
+
+    private void Awake()
+    {
+        currentPlayerText = transform.Find("Current Player Text").GetComponent<TextMeshProUGUI>();
+        highscoreText = transform.Find("Highscore Text").GetComponent<TextMeshProUGUI>();
+    }
     void Start()
     {
-        // Set highest score textField
+        DataPersistence.Instance.currentPlayer = "Noone";
+        highscoreText.text = "Highscore " + DataPersistence.Instance.highestScore + " by " + DataPersistence.Instance.bestPlayer;
+    }
+
+    public void ReadStringInput(string s)
+    {
+        input = s;
+        Debug.Log(input);
+
+        DataPersistence.Instance.currentPlayer = input;
+        currentPlayerText.text = "Current player is " + DataPersistence.Instance.currentPlayer;
     }
 
     public void StartGame()
